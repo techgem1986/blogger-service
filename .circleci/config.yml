@@ -9,17 +9,24 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Build
+          name: Building Jar
           command: mvn -B -DskipTests clean package
       - run:
-          name: Test
+          name: JUnit Test
           command: mvn test
       - run:
-          name: Analysis
+          name: Sonar Analysis
           command: mvn verify sonar:sonar -Dsonar.projectKey=techgem1986_account-service
+      - run:
+          name: Docker Login
+          command: docker login -u $DOCKER_ID -p $ACCESS_TOKEN
+      - run:
+          name: Container Image
+          command: mvn clean compile jib:build -Dimage=techgem1986/account-service:$CIRCLE_BUILD_NUM
 workflows:
   main:
     jobs:
       - build:
           context:
             - SonarCloud
+            - DockerHub
