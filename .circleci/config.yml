@@ -40,12 +40,12 @@ jobs:
           family: 'account-service'
 
 workflows:
-  main:
+  build-deploy:
     jobs:
       - build:
           context:
             - SonarCloud
             - DockerHub
-     - deploy:
-         context:
-           - AWS
+      - deploy:
+          context:
+            - AWS
