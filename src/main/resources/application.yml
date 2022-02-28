@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: account-service
+  profiles:
+    active: dev
+
+---
+spring:
+  profiles: dev
+

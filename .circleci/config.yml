@@ -1,6 +1,9 @@
 # Use the latest 2.1 version of CircleCI pipeline process engine. 
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
+orbs:
+  aws-cli: circleci/aws-cli@1.3
+  aws-ecs: circleci/aws-ecs@2.0
 
 jobs:
   build:
@@ -9,10 +12,10 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Building Jar
+          name: Building Spring Boot Jar
           command: mvn -B -DskipTests clean package
       - run:
-          name: JUnit Test
+          name: Running JUnit Test Cases
           command: mvn test
       - run:
           name: Sonar Analysis
@@ -21,8 +24,21 @@ jobs:
           name: Docker Login
           command: docker login -u $DOCKER_ID -p $ACCESS_TOKEN
       - run:
-          name: Container Image
+          name: Building Container Image
           command: mvn clean compile jib:build -Dimage=techgem1986/account-service:$CIRCLE_BUILD_NUM
+  deploy:
+    docker:
+      - image: 'cimg/python:3.9.1'
+    steps:
+      - aws-cli/setup:
+          aws-access-key-id: $AWS_ACCESS_KEY_ID
+          aws-region: $AWS_DEFAULT_REGION
+          aws-secret-access-key: $AWS_SECRET_ACCESS_KEY
+      - aws-ecs/update-service:
+          cluster-name: 'techgem1986'
+          container-image-name-updates: 'container=docker.io/techgem1986/account-service,tag=latest'
+          family: 'account-service'
+
 workflows:
   main:
     jobs:
@@ -30,3 +46,6 @@ workflows:
           context:
             - SonarCloud
             - DockerHub
+     - deploy:
+         context:
+           - AWS
