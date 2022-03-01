@@ -36,7 +36,7 @@ jobs:
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
       - aws-ecs/update-service:
           cluster-name: 'techgem1986'
-          container-image-name-updates: 'container=account-service,image-and-tag=docker.io/techgem1986/account-service:latest'
+          container-image-name-updates: 'container=account-service,image-and-tag=docker.io/techgem1986/account-service:${CIRCLE_BUILD_NUM}'
           family: 'account-service'
 
 workflows:
