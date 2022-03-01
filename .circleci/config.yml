@@ -12,21 +12,17 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Docker Login
+          name: Maven
+          command: mvn clean package
+      - run:
+          name: Sonar
+          command: mvn verify sonar:sonar -Dsonar.projectKey=techgem1986_account-service
+      - run:
+          name: Docker
           command: docker login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
       - run:
-          name: Build and Publish
-          command: mvn clean verify sonar:sonar -Dsonar.projectKey=techgem1986_account-service package compile jib:build -Dimage=techgem1986/account-service:$CIRCLE_BUILD_NUM
-#      - run:
-#          name: Sonar
-#          command: mvn verify sonar:sonar -Dsonar.projectKey=techgem1986_account-service
-##      - run:
-##          name: Docker Login
-##          command: docker login -u $DOCKER_ID -p $ACCESS_TOKEN
-#      - run:
-#          name: Building Container Image
-#          command: mvn compile jib:build -Dimage=techgem1986/account-service:$CIRCLE_BUILD_NUM
-
+          name: Jib
+          command: mvn compile jib:build -Dimage=techgem1986/account-service:$CIRCLE_BUILD_NUM
 workflows:
   build-publish-deploy:
     jobs:
