@@ -12,7 +12,7 @@ public class AccountController {
 
     @GetMapping("/health-check")
     public String healthCheck(){
-        return "Successful!";
+        return "Welcome Sandipan!";
     }
 
 }
