@@ -2,9 +2,16 @@ spring:
   application:
     name: account-service
   profiles:
-    active: dev
+    active: aws
 
 ---
 spring:
-  profiles: dev
-
+  profiles: local
+aws:
+  access:
+    key:
+  secret:
+    key:
+---
+spring:
+  profiles: aws
