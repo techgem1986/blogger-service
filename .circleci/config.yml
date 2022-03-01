@@ -2,6 +2,7 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 orbs:
+  docker: circleci/docker@2.0.2
   aws-cli: circleci/aws-cli@1.3
   aws-ecs: circleci/aws-ecs@2.0.0
 
@@ -20,12 +21,12 @@ jobs:
       - run:
           name: Sonar Analysis
           command: mvn verify sonar:sonar -Dsonar.projectKey=techgem1986_account-service
-      - run:
-          name: Docker Login
-          command: docker login -u $DOCKER_ID -p $ACCESS_TOKEN
-      - run:
-          name: Building Container Image
-          command: mvn clean compile jib:build -Dimage=techgem1986/account-service:$CIRCLE_BUILD_NUM
+#      - run:
+#          name: Docker Login
+#          command: docker login -u $DOCKER_ID -p $ACCESS_TOKEN
+#      - run:
+#          name: Building Container Image
+#          command: mvn clean compile jib:build -Dimage=techgem1986/account-service:$CIRCLE_BUILD_NUM
 
 workflows:
   build-deploy:
@@ -33,12 +34,18 @@ workflows:
       - build:
           context:
             - SonarCloud
+      - docker/publish:
+          image: techgem1986/account-service
+          update-description: true
+          requires:
+            - build
+          context:
             - DockerHub
       - aws-ecs/deploy-service-update:
           cluster-name: 'techgem1986'
           container-image-name-updates: 'container=account-service,image-and-tag=docker.io/techgem1986/account-service:latest'
           family: 'account-service'
           requires:
-            - build
+            - docker/publish
           context:
             - AWS
