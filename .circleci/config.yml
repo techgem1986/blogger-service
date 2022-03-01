@@ -3,7 +3,7 @@
 version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@1.3
-  aws-ecs: circleci/aws-ecs@2.2.1
+  aws-ecs: circleci/aws-ecs@2.0.0
 
 jobs:
   build:
@@ -34,10 +34,6 @@ jobs:
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-region: AWS_DEFAULT_REGION
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-#      - aws-ecs/update-service:
-#          cluster-name: 'techgem1986'
-#          container-image-name-updates: 'container=account-service,image-and-tag=docker.io/techgem1986/account-service:${CIRCLE_BUILD_NUM}'
-#          family: 'account-service'
       - aws-ecs/deploy-service-update:
           cluster-name: 'techgem1986'
           container-image-name-updates: 'container=account-service,image-and-tag=docker.io/techgem1986/account-service:${CIRCLE_BUILD_NUM}'
