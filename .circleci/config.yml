@@ -24,9 +24,9 @@ jobs:
 #      - run:
 #          name: Docker Login
 #          command: docker login -u $DOCKER_ID -p $ACCESS_TOKEN
-#      - run:
-#          name: Building Container Image
-#          command: mvn clean compile jib:build -Dimage=techgem1986/account-service:$CIRCLE_BUILD_NUM
+      - run:
+          name: Building Container Image
+          command: mvn clean compile jib:build -Dimage=techgem1986/account-service:$CIRCLE_BUILD_NUM
 
 workflows:
   build-deploy:
@@ -34,18 +34,19 @@ workflows:
       - build:
           context:
             - SonarCloud
-      - docker/publish:
-          image: techgem1986/account-service
-          update-description: true
-          requires:
-            - build
-          context:
             - DockerHub
+#      - docker/publish:
+#          image: techgem1986/account-service
+#          update-description: true
+#          requires:
+#            - build
+#          context:
+#            - DockerHub
       - aws-ecs/deploy-service-update:
           cluster-name: 'techgem1986'
           container-image-name-updates: 'container=account-service,image-and-tag=docker.io/techgem1986/account-service:latest'
           family: 'account-service'
           requires:
-            - docker/publish
+            - build
           context:
             - AWS
