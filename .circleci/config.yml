@@ -26,20 +26,7 @@ jobs:
       - run:
           name: Building Container Image
           command: mvn clean compile jib:build -Dimage=techgem1986/account-service:$CIRCLE_BUILD_NUM
-  deploy:
-    docker:
-      - image: 'cimg/python:3.9.1'
-    steps:
-      - aws-cli/setup:
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-region: AWS_DEFAULT_REGION
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-      - aws-ecs/deploy-service-update:
-          cluster-name: 'techgem1986'
-          container-image-name-updates: 'container=account-service,image-and-tag=docker.io/techgem1986/account-service:${CIRCLE_BUILD_NUM}'
-          family: 'account-service'
-          requires:
-            - aws-cli/setup
+
 workflows:
   build-deploy:
     jobs:
@@ -47,7 +34,10 @@ workflows:
           context:
             - SonarCloud
             - DockerHub
-      - deploy:
+      - aws-ecs/deploy-service-update:
+          cluster-name: 'techgem1986'
+          container-image-name-updates: 'container=account-service,image-and-tag=docker.io/techgem1986/account-service:${CIRCLE_BUILD_NUM}'
+          family: 'account-service'
           requires:
             - build
           context:
