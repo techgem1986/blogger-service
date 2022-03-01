@@ -36,7 +36,7 @@ workflows:
             - DockerHub
       - aws-ecs/deploy-service-update:
           cluster-name: 'techgem1986'
-          container-image-name-updates: 'container=account-service,image-and-tag=docker.io/techgem1986/account-service:${CIRCLE_BUILD_NUM}'
+          container-image-name-updates: 'container=account-service,image-and-tag=docker.io/techgem1986/account-service:latest'
           family: 'account-service'
           requires:
             - build
