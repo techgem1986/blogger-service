@@ -20,11 +20,6 @@ public class AccountController {
     @Autowired
     AccountRepository accountRepository;
 
-    @GetMapping("/health-check")
-    public String healthCheck(){
-        return "Welcome Sandipan!";
-    }
-
     @GetMapping(path = "/getAll")
     public List<Account> getAllAccount() {
         logger.info("Entering getAllAccount method");

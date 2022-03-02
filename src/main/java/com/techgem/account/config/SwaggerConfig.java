@@ -21,8 +21,8 @@ public class SwaggerConfig {
     }
     private ApiInfo metaData() {
         return new ApiInfo(
-                "Blogger",
-                "Blogger",
+                "Account",
+                "Account",
                 "1.0",
                 "Terms of service",
                 "Sandipan Sarkar",

@@ -19,19 +19,17 @@ public class AccountRepository {
     DynamoDBMapper dbMapper;
 
     public List<Account> getAllAccount() {
-        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
-        List<Account>  listTasks = dbMapper.scan(Account.class, scanExpression);
-        return listTasks;
+        return dbMapper.scan(Account.class, new DynamoDBScanExpression());
     }
 
     public void addAccount(Account account) {
         dbMapper.save(account);
-        logger.info("Account Added : "+account.getAccountDescription());
+        logger.info("Account Added : "+account.getId());
     }
 
     public void deleteAccount(Account account) {
         dbMapper.delete(account);
-        logger.info("Account delete : "+account.getAccountDescription());
+        logger.info("Account delete : "+account.getId());
     }
 
 }
