@@ -6,7 +6,7 @@ orbs:
   aws-ecs: circleci/aws-ecs@2.0.0
 
 jobs:
-  build-and-publish:
+  build-and-push-to-docker-hub:
     docker:
       - image: cimg/openjdk:11.0-node
     steps:
@@ -24,9 +24,9 @@ jobs:
           name: Jib
           command: mvn compile jib:build -Dimage=techgem1986/blogger-service:$CIRCLE_BUILD_NUM
 workflows:
-  build-publish-deploy:
+  build-and-deploy-to-ecs:
     jobs:
-      - build-and-publish:
+      - build-and-push-to-docker-hub:
           context:
             - SonarCloud
             - DockerHub
