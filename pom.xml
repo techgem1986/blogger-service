@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.techgem</groupId>
-	<artifactId>account-service</artifactId>
+	<artifactId>blogger-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>account-service</name>
-	<description>This service handles creation, modification and closing of accounts</description>
+	<name>blogger-service</name>
+	<description>Blogger CRUD Service</description>
 	<properties>
 		<java.version>11</java.version>
 		<sonar.organization>techgem1986</sonar.organization>

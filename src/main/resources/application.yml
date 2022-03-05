@@ -1,6 +1,6 @@
 spring:
   application:
-    name: account-service
+    name: blogger-service
   profiles:
     active: aws
 

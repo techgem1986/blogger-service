@@ -1,4 +1,4 @@
-package com.techgem.account.config;
+package com.techgem.blogger.config;
 
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 @Configuration
-@EnableDynamoDBRepositories(basePackages = "com.techgem.account.repository")
+@EnableDynamoDBRepositories(basePackages = "com.techgem.blogger.repository")
 @Profile("aws")
 public class DynamodbConfiguration {
 

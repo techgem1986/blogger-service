@@ -1,2 +1,2 @@
-# account-service
-This service handles creation, modification and closing of accounts
+# blogger-service
+Blogger CRUD Service

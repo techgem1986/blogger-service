@@ -1,10 +1,10 @@
-package com.techgem.account;
+package com.techgem.blogger;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AccountServiceApplicationTests {
+class BlogServiceApplicationTests {
 
 	@Test
 	void contextLoads() {
