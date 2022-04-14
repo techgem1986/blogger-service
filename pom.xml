@@ -77,7 +77,7 @@
 		<dependency>
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk-dynamodb</artifactId>
-			<version>1.12.154</version>
+			<version>1.12.199</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.github.derjust/spring-data-dynamodb -->
